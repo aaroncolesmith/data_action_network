@@ -876,10 +876,10 @@ def refresh_fbref_data(df):
 
 # if datetime.now().hour in (2,12,20):
 print('refreshing fb ref')
-try:
-  refresh_fbref_data(df_soccer)
-except Exception as e:
-  print(f'fbref failed -- {e}')
+# try:
+refresh_fbref_data(df_soccer)
+# except Exception as e:
+#   print(f'fbref failed -- {e}')
 
 
 
