@@ -785,20 +785,26 @@ def extract_date_and_league(url):
     return None, None
 
 def clean_team_name_fbref(team_name):
-    # Define a list of substrings to remove
-    remove_list = [' dk', 'dk ', ' it', 'it ', ' at', 'at ', 'eng', 'eng ', 'es ', ' es', 'de ', ' de', ' rs', 'fr ', ' fr', 'sct ', ' sct',
-                   'nl ', ' nl', 'pt ', ' pt', 'ua ', 'ua ', 'az ', 'az ', 'si ', ' si', 'tr ', ' tr', 'ad ', 'ad ', 'gr ', ' gr',
-                   'hu ', 'uh ', 'ge ', ' ge', 'cy ', ' cy', 'ch ', ' ch', 'cz ', ' cz', 'xk ', ' xk', 'md ', ' md', 'be ', ' eb', 'by ', ' by',
-                   'kz ', ' kz', 'az ', ' be', ' ua', 'is', ' is', ' hu', 'pl ', ' pl', 'wls ', ' wls', 'se ', 'se ', 'il ', ' il',
-                   ' ad',' az',' sk','sk ',' hr','hr ','bg ',' bg',
-                   'rs ', ' rs', 'ba ', ' ba', 'gi ', ' gi', 'no ', ' no']
+    # Check if team_name is a string before applying regex
+    if isinstance(team_name, str):
+        # Define a list of substrings to remove
+        remove_list = [' dk', 'dk ', ' it', 'it ', ' at', 'at ', 'eng', 'eng ', 'es ', ' es', 'de ', ' de', ' rs', 'fr ', ' fr', 'sct ', ' sct',
+                       'nl ', ' nl', 'pt ', ' pt', 'ua ', 'ua ', 'az ', 'az ', 'si ', ' si', 'tr ', ' tr', 'ad ', 'ad ', 'gr ', ' gr',
+                       'hu ', 'uh ', 'ge ', ' ge', 'cy ', ' cy', 'ch ', ' ch', 'cz ', ' cz', 'xk ', ' xk', 'md ', ' md', 'be ', ' eb', 'by ', ' by',
+                       'kz ', ' kz', 'az ', ' be', ' ua', 'is', ' is', ' hu', 'pl ', ' pl', 'wls ', ' wls', 'se ', 'se ', 'il ', ' il',
+                       ' ad',' az',' sk','sk ',' hr','hr ','bg ',' bg',
+                       'rs ', ' rs', 'ba ', ' ba', 'gi ', ' gi', 'no ', ' no']
 
+        # Iterate through the list and remove each substring
+        for substring in remove_list:
+            team_name = re.sub(re.escape(substring), '', team_name)
 
-    # Iterate through the list and remove each substring
-    for substring in remove_list:
-        team_name = re.sub(re.escape(substring), '', team_name)
+        return team_name.strip()  # Remove any leading/trailing whitespace
+    else:
+        # If not a string (e.g., float), handle accordingly
+        # Here we just return the original value, but you might want to log it or handle it differently
+        return team_name
 
-    return team_name.strip()  # Remove any leading/trailing whitespace
 
 
 def refresh_fbref_data(df):
