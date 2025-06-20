@@ -146,14 +146,14 @@ def refresh_fbref_data_updated(df):
 
   df_all = pd.read_parquet('./data/fb_ref_data.parquet', engine='pyarrow')
 
-  for date in date_list_recent:
-    print(date)
+  for dt in dates:
+    print(dt)
     proxy=get_proxy()
     sleep_time=2.0 + np.random.uniform(1,4) +  np.random.uniform(0,1)
     time.sleep(sleep_time)
 
 
-    url=f'https://fbref.com/en/matches/{date}'
+    url=f'https://fbref.com/en/matches/{dt}'
     r = requests.get(url,headers=headers,proxies=proxy)
 
 
@@ -176,7 +176,7 @@ def refresh_fbref_data_updated(df):
     df['url'] = pd.Series(all_urls)
     df['match_selector'] = df['Home']+' '+df['Score']+' '+df['Away']
     df['date_scraped'] = datetime.now()
-    df['date'] = date
+    df['date'] = dt
     df=df.rename(columns={'xG':'home_xg', 'xG.1':'away_xg'})
 
 
