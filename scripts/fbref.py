@@ -152,10 +152,14 @@ def refresh_fbref_data_updated(df):
     sleep_time=2.0 + np.random.uniform(1,4) +  np.random.uniform(0,1)
     time.sleep(sleep_time)
 
-
+    print('headers')
+    print(headers)
+    print('proxy')
+    print(proxy)  
     url=f'https://fbref.com/en/matches/{dt}'
     r = requests.get(url,headers=headers,proxies=proxy)
 
+    print(r.status_code)
 
     soup = BeautifulSoup(r.content, "html.parser")
     all_urls = []
